@@ -161,8 +161,6 @@ it("does not show the right arrow when you’re on the last image", function () 
 });
 
 
-
-
 it("matches snapshot", function () {
   const { container } = render(
     <Carousel
