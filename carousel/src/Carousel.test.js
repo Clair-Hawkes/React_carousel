@@ -3,11 +3,11 @@ import Carousel from "./Carousel";
 import TEST_IMAGES from "./_testCommon.js";
 
 
-it("renders without crashing", function (){
+it("renders without crashing", function () {
   render(<Carousel photos={TEST_IMAGES} title="Test Title" />);
 });
 
-it("works when you click on the right arrow", function() {
+it("works when you click on the right arrow", function () {
   const { container } = render(
     <Carousel
       photos={TEST_IMAGES}
@@ -36,7 +36,7 @@ it("works when you click on the right arrow", function() {
 });
 
 //******************************** LEFT ARROW  *********/
-it("works when you click on the left arrow", function() {
+it("works when you click on the left arrow", function () {
   const { container } = render(
     <Carousel
       photos={TEST_IMAGES}
@@ -79,11 +79,95 @@ it("works when you click on the left arrow", function() {
   ).not.toBeInTheDocument();
 });
 
+// Tests x2
+
+// Test 1: that the left arrow is missing when you’re on the first image,
+// Use the toBeInTheDocument for the right arrow
+// Use the not.toBeInTheDocument for the left arrow
+
+//******************************** LEFT ARROW MISSING  *********/
+it("does not show the left arrow when you’re on the first image", function () {
+  const { container } = render(
+    <Carousel
+      photos={TEST_IMAGES}
+      title="images for testing"
+    />
+  );
+  // expect the first image to show, but not the second
+  expect(
+    container.querySelector('img[alt="testing image 1"]')
+  ).toBeInTheDocument();
+  expect(
+    container.querySelector('img[alt="testing image 2"]')
+  ).not.toBeInTheDocument();
+
+  // expect that the left arrow is missing when you’re on the first image.
+  expect(
+    container.querySelector(".bi-arrow-left-circle")
+  ).not.toBeInTheDocument();
+
+  // expect that the right arrow shows when you’re on the first image.
+  expect(
+    container.querySelector(".bi-arrow-right-circle")
+  ).toBeInTheDocument();
+});
+
+
+//TODO: Update Test to check for Right arrow missing.
+// Test 2: that the right arrow is missing when you’re on the last image.
+// Use the toBeInTheDocument for the left arrow
+// Use the not.toBeInTheDocument for the right arrow
+
+//******************************** RIGHT ARROW MISSING  *********/
+it("does not show the right arrow when you’re on the last image", function () {
+  const { container } = render(
+    <Carousel
+      photos={TEST_IMAGES}
+      title="images for testing"
+    />
+  );
+  // expect the first image to show, but not the second
+  expect(
+    container.querySelector('img[alt="testing image 1"]')
+  ).toBeInTheDocument();
+  expect(
+    container.querySelector('img[alt="testing image 2"]')
+  ).not.toBeInTheDocument();
+
+  // move forward in the carousel to img 2
+  const rightArrow = container.querySelector(".bi-arrow-right-circle");
+  fireEvent.click(rightArrow);
+
+  // move forward in the carousel to img 3
+  fireEvent.click(rightArrow);
+
+  // expect the third image to show, but not the second
+  expect(
+    container.querySelector('img[alt="testing image 3"]')
+  ).toBeInTheDocument();
+  expect(
+    container.querySelector('img[alt="testing image 2"]')
+  ).not.toBeInTheDocument();
+
+  // expect that the left arrow is missing when you’re on the first image.
+  expect(
+    container.querySelector(".bi-arrow-right-circle")
+  ).not.toBeInTheDocument();
+
+  // expect that the right arrow shows when you’re on the first image.
+  expect(
+    container.querySelector(".bi-arrow-left-circle")
+  ).toBeInTheDocument();
+});
+
+
+
+
 it("matches snapshot", function () {
   const { container } = render(
-    <Carousel 
-      photos={TEST_IMAGES} 
-      title="Test Title" 
+    <Carousel
+      photos={TEST_IMAGES}
+      title="Test Title"
     />
   );
   expect(container).toMatchSnapshot();
