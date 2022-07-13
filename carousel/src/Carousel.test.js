@@ -86,6 +86,13 @@ it("works when you click on the left arrow", function () {
 // Use the toBeInTheDocument for the right arrow
 // Use the not.toBeInTheDocument for the left arrow
 
+//The arrows now always are present. But have a variable css visibility value.
+// Test the value of the visibility attribute of the i tag
+// We have I tag DOM element as a variable?
+//Use the .getAttribute(style) method on the
+//Log the value ^
+//
+
 //******************************** LEFT ARROW DOESN'T SHOW  *********/
 it("does not show the left arrow when you’re on the first image", function () {
   const { container } = render(
@@ -102,15 +109,13 @@ it("does not show the left arrow when you’re on the first image", function () 
     container.querySelector('img[alt="testing image 2"]')
   ).not.toBeInTheDocument();
 
-  // expect that the left arrow is missing when you’re on the first image.
-  expect(
-    container.querySelector(".bi-arrow-left-circle")
-  ).not.toBeInTheDocument();
-
+  const rightArrow = container.querySelector(".bi-arrow-right-circle");
+  const leftArrow = container.querySelector(".bi-arrow-left-circle");
   // expect that the right arrow shows when you’re on the first image.
-  expect(
-    container.querySelector(".bi-arrow-right-circle")
-  ).toBeInTheDocument();
+  expect(rightArrow.getAttribute('style')).toContain("visibility: visible;");
+  // expect that the left arrow is missing when you’re on the first image.
+
+  expect(leftArrow.getAttribute('style')).toContain("visibility: hidden;");
 });
 
 // Test 2: that the right arrow is missing when you’re on the last image.
@@ -119,7 +124,7 @@ it("does not show the left arrow when you’re on the first image", function () 
 
 //******************************** RIGHT ARROW DOESN'T SHOW  *********/
 it("does not show the right arrow when you’re on the last image", function () {
-  const { container } = render(
+  const { container, debug } = render(
     <Carousel
       photos={TEST_IMAGES}
       title="images for testing"
@@ -135,6 +140,12 @@ it("does not show the right arrow when you’re on the last image", function () 
 
   // move forward in the carousel to img 2
   const rightArrow = container.querySelector(".bi-arrow-right-circle");
+  const leftArrow = container.querySelector(".bi-arrow-left-circle");
+
+  console.log(rightArrow.getAttribute('style'));
+  console.log(147);
+  debug(rightArrow);
+
   fireEvent.click(rightArrow);
 
   // move forward in the carousel to img 3
@@ -149,14 +160,9 @@ it("does not show the right arrow when you’re on the last image", function () 
   ).not.toBeInTheDocument();
 
   // expect that the right arrow is missing when you’re on the first image.
-  expect(
-    container.querySelector(".bi-arrow-right-circle")
-  ).not.toBeInTheDocument();
-
+  expect(rightArrow.getAttribute('style')).toContain("visibility: hidden;");
   // expect that the left arrow shows when you’re on the first image.
-  expect(
-    container.querySelector(".bi-arrow-left-circle")
-  ).toBeInTheDocument();
+  expect(leftArrow.getAttribute('style')).toContain("visibility: visible;");
 });
 
 
