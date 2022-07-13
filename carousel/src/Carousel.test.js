@@ -2,6 +2,7 @@ import { render, fireEvent } from "@testing-library/react";
 import Carousel from "./Carousel";
 import TEST_IMAGES from "./_testCommon.js";
 
+//TODO: Change common strings to global constants
 
 it("renders without crashing", function () {
   render(<Carousel photos={TEST_IMAGES} title="Test Title" />);
@@ -85,7 +86,7 @@ it("works when you click on the left arrow", function () {
 // Use the toBeInTheDocument for the right arrow
 // Use the not.toBeInTheDocument for the left arrow
 
-//******************************** LEFT ARROW MISSING  *********/
+//******************************** LEFT ARROW DOESN'T SHOW  *********/
 it("does not show the left arrow when you’re on the first image", function () {
   const { container } = render(
     <Carousel
@@ -112,13 +113,11 @@ it("does not show the left arrow when you’re on the first image", function () 
   ).toBeInTheDocument();
 });
 
-
-//TODO: Update Test to check for Right arrow missing.
 // Test 2: that the right arrow is missing when you’re on the last image.
 // Use the toBeInTheDocument for the left arrow
 // Use the not.toBeInTheDocument for the right arrow
 
-//******************************** RIGHT ARROW MISSING  *********/
+//******************************** RIGHT ARROW DOESN'T SHOW  *********/
 it("does not show the right arrow when you’re on the last image", function () {
   const { container } = render(
     <Carousel
@@ -149,12 +148,12 @@ it("does not show the right arrow when you’re on the last image", function () 
     container.querySelector('img[alt="testing image 2"]')
   ).not.toBeInTheDocument();
 
-  // expect that the left arrow is missing when you’re on the first image.
+  // expect that the right arrow is missing when you’re on the first image.
   expect(
     container.querySelector(".bi-arrow-right-circle")
   ).not.toBeInTheDocument();
 
-  // expect that the right arrow shows when you’re on the first image.
+  // expect that the left arrow shows when you’re on the first image.
   expect(
     container.querySelector(".bi-arrow-left-circle")
   ).toBeInTheDocument();

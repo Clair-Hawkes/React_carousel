@@ -34,20 +34,24 @@ function Carousel({ photos, title }) {
     <div className="Carousel">
       <h1>{title}</h1>
       <div className="Carousel-main">
-        {currCardIdx > 0 && <i
+        <i
           className="bi bi-arrow-left-circle"
           onClick={goBackward}
-        />}
+          style={{visibility: (currCardIdx > 0) ? "visible" : "hidden"}}
+        />
         <Card
           caption={currCard.caption}
           src={currCard.src}
           currNum={currCardIdx + 1}
           totalNum={total}
         />
-        {currCardIdx < photos.length - 1 && <i
+        <i
           className="bi bi-arrow-right-circle"
           onClick={goForward}
-        />}
+          style={
+            {visibility: (currCardIdx < photos.length - 1) ? "visible" : "hidden"}
+          }
+        />
       </div>
     </div>
   );
